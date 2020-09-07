@@ -1,0 +1,32 @@
+{
+    "vtype": "MGuiLayout",
+    "vid": "root",
+    "config": {},
+    "children":[
+        {
+            "vtype": "MGuiLayout",
+            "vid": null,
+            "config": {},
+            "children":[
+                {
+                    "vtype": "MGuiView",
+                    "vid": "lv2view1",
+                    "config": {"l_width":-1},
+                    "children":[]
+                },
+                {
+                    "vtype": "MGuiView",
+                    "vid": "lv2view2",
+                    "config": {},
+                    "children":[]
+                }
+            ]
+        },
+        {
+            "vtype": "MGuiView",
+            "vid": "lv1view",
+            "config": {},
+            "children":[]
+        }
+    ]
+}
