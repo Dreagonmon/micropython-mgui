@@ -16,13 +16,15 @@ class MGuiEvent(object):
 class MGuiContext(dict):
     pass
 
-# ======== Base Class ========
+# ======== Core Class ========
 class MGuiView(object):
     def __init__(self, context, vid=None):
         self.__parent = None
+        # static property
         self.context = context
         self.vid = vid
         self.config = {}
+        # runtime property
         pass
     def _set_parent(self, parent):
         self.__parent = parent
@@ -92,8 +94,10 @@ class MGuiLayout(MGuiView):
             effect_area.extend(view.render(context, frame, area))
         return effect_area
     def on_event(self, context, event):
+        if not isinstance(event, MGuiEvent):
+            return False
+        for view in self.children:
+            if view.on_event(context, event):
+                return True
         # default return super() method
         return super().on_event(context, event)
-
-
-# ======== UI Components ========
