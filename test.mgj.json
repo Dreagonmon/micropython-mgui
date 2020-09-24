@@ -1,32 +1,32 @@
 {
-    "vtype": "MGuiLayout",
-    "vid": "root",
-    "config": {},
-    "children":[
+    "t": "MGuiLayout",
+    "i": "root",
+    "cf": {},
+    "cd":[
         {
-            "vtype": "MGuiLayout",
-            "vid": null,
-            "config": {},
-            "children":[
+            "t": "MGuiLayout",
+            "i": null,
+            "cf": {},
+            "cd":[
                 {
-                    "vtype": "MGuiView",
-                    "vid": "lv2view1",
-                    "config": {"l_width":-1},
-                    "children":[]
+                    "t": "MGuiView",
+                    "i": "lv2view1",
+                    "cf": {"l_width":-1},
+                    "cd":[]
                 },
                 {
-                    "vtype": "MGuiView",
-                    "vid": "lv2view2",
-                    "config": {},
-                    "children":[]
+                    "t": "MGuiView",
+                    "i": "lv2view2",
+                    "cf": {},
+                    "cd":[]
                 }
             ]
         },
         {
-            "vtype": "MGuiView",
-            "vid": "lv1view",
-            "config": {},
-            "children":[]
+            "t": "MGuiView",
+            "i": "lv1view",
+            "cf": {},
+            "cd":[]
         }
     ]
 }

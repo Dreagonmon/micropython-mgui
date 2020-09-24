@@ -1,9 +1,9 @@
 from .mgui_class import MGuiView, MGuiLayout
 
-__KEY_TYPE = "vtype"
-__KEY_ID = "vid"
-__KEY_CONFIG = "config"
-__KEY_CHILDREN = "children"
+__KEY_TYPE = "t"
+__KEY_ID = "i"
+__KEY_CONFIG = "cf"
+__KEY_CHILDREN = "cd"
 __class_map__ = {}
 
 def register_mgui_component(_class_, name):
