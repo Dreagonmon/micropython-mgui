@@ -20,17 +20,21 @@ class MGuiContext(dict):
 class MGuiView(object):
     def __init__(self, context, vid=None):
         self.__parent = None
-        # static property
-        self.context = context
+        # configure property
         self.vid = vid
         self.config = {}
         # runtime property
+        self.context = context
+        self.is_need_render = True
         pass
     def _set_parent(self, parent):
         self.__parent = parent
-        pass
     def get_parent(self):
         return self.__parent
+    def update_config(self, new_config):
+        ''' used when change config '''
+        self.config = new_config
+        self.is_need_render = True
     def find_view_by_vid(self, vid:str):
         ''' check for vid. If equal, return self. Otherwise return None '''
         if self.vid != None and self.vid == vid:
@@ -38,9 +42,10 @@ class MGuiView(object):
         return None
     def need_render(self, context):
         ''' check if view need render '''
-        return False
+        return self.is_need_render
     def render(self, context, frame, area):
         ''' render on framebuf in area. return effected area list'''
+        self.is_need_render = False
         return []
     def on_event(self, context, event):
         ''' event handler, when handled, return True if the event has been processed '''
@@ -56,10 +61,12 @@ class MGuiLayout(MGuiView):
             return # type check
         view._set_parent(self)
         self.children.append(view)
+        self.is_need_render = True
     def remove_child(self, index):
         if index >= 0 and index < len(self.children):
             self.children[index]._set_parent(None)
             del self.children[index]
+            self.is_need_render = True
     def index_child(self, view_or_vid):
         count = len(self.children)
         if isinstance(view_or_vid, MGuiView):
@@ -83,6 +90,8 @@ class MGuiLayout(MGuiView):
         return None
     def need_render(self, context):
         ''' check if view need render '''
+        if self.is_need_render:
+            return True
         for view in self.children:
             if (view.need_render(context)):
                 return True
@@ -92,6 +101,7 @@ class MGuiLayout(MGuiView):
         # example, just render it all
         for view in self.children:
             effect_area.extend(view.render(context, frame, area))
+        self.is_need_render = False
         return effect_area
     def on_event(self, context, event):
         if not isinstance(event, MGuiEvent):

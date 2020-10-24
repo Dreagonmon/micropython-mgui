@@ -1,32 +1,24 @@
 {
     "t": "MGuiLayout",
     "i": "root",
-    "cf": {},
     "cd":[
         {
             "t": "MGuiLayout",
-            "i": null,
-            "cf": {},
             "cd":[
                 {
                     "t": "MGuiView",
                     "i": "lv2view1",
-                    "cf": {"l_width":-1},
-                    "cd":[]
+                    "cf": {"l_width":-1}
                 },
                 {
                     "t": "MGuiView",
-                    "i": "lv2view2",
-                    "cf": {},
-                    "cd":[]
+                    "i": "lv2view2"
                 }
             ]
         },
         {
             "t": "MGuiView",
-            "i": "lv1view",
-            "cf": {},
-            "cd":[]
+            "i": "lv1view"
         }
     ]
 }

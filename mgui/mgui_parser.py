@@ -18,10 +18,12 @@ def dump_mgui(root):
         return None
     root_dict = {}
     root_dict[__KEY_TYPE] = __class_map__[type(root)]
-    root_dict[__KEY_ID] = root.vid
-    root_dict[__KEY_CONFIG] = root.config
-    root_dict[__KEY_CHILDREN] = []
-    if isinstance(root, MGuiLayout):
+    if root.vid != None:
+        root_dict[__KEY_ID] = root.vid
+    if len(root.config) > 0:
+        root_dict[__KEY_CONFIG] = root.config
+    if isinstance(root, MGuiLayout) and len(root.children)>0:
+        root_dict[__KEY_CHILDREN] = []
         for view in root.children:
             root_dict[__KEY_CHILDREN].append(dump_mgui(view))
     return root_dict
@@ -36,7 +38,7 @@ def load_mgui(root_dict, context):
         vid = root_dict[__KEY_ID]
     root = __class_map__[root_dict[__KEY_TYPE]](context, vid)
     if __KEY_CONFIG in root_dict:
-        root.config = root_dict[__KEY_CONFIG]
+        root.update_config(root_dict[__KEY_CONFIG])
     if isinstance(root, MGuiLayout) and __KEY_CHILDREN in root_dict:
         for child_dict in root_dict[__KEY_CHILDREN]:
             root.append_child(load_mgui(child_dict, context))
