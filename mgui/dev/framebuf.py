@@ -7,8 +7,8 @@ RGB565 = 1
 GS2_HMSB = 5
 GS4_HMSB = 2
 GS8 = 6
-MONO_HLSB = 3
-MONO_HMSB = 4
+MONO_HLSB = 3 # in fact, it is MSB
+MONO_HMSB = 4 # in fact, it is LSB
 
 MAX = lambda x, y: x if x > y else y
 MIN = lambda x, y: x if x < y else y
@@ -28,7 +28,7 @@ class AbstractFormat(object):
     def _get_pixel(self, x, y): pass
     def _fill_rect(self, x, y, w, h, c): pass
     def __repr__(self):
-        txt = ''
+        txt = '<framebuffer.FrameBuffer object Width: {:}, Height: {:}>\n'.format(self.width, self.height)
         for y in range(self.height):
             for x in range(self.width):
                 txt += '██' if self._get_pixel(x, y) != 0 else '  '
@@ -113,7 +113,7 @@ class FrameBuffer(object):
     def pixel(self, x, y, c=None):
         if 0 <= x and x < self.width and 0 <= y and y < self.height:
             if c == None:
-                self.__format._get_pixel(x, y)
+                return self.__format._get_pixel(x, y)
             else:
                 self.__format._set_pixel(x, y, c)
         return None

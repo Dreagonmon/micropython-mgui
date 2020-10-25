@@ -10,7 +10,7 @@ GS8: int
 MONO_HLSB: int
 MONO_HMSB: int
 
-Color = NewType("Color", Union[int, Iterable])
+Color = NewType("Color", int)
 class FrameBuffer(object):
     def __init__(self, buffer: Union[bytes, bytearray, memoryview, Iterable], width: int, height: int, format: int, stride: int = ...) -> NoReturn: ...
     def fill(self, c: Color) -> NoReturn: ...
