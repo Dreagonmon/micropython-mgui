@@ -4,3 +4,4 @@ __pycache__/
 .vscode
 /dist/
 /lib/mpy_cross/mpy-cross*
+*.mpf

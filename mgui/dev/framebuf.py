@@ -98,13 +98,14 @@ class FrameBuffer(object):
         self.format = format
         self.stride = stride if stride else width
         if self.format == MONO_HMSB or self.format == MONO_HLSB:
-            self.__format = FormatMonoHorizontal(buffer, width, height, format, stride)
+            self.stride = (self.stride + 7) & ~7
+            self.__format = FormatMonoHorizontal(self.buffer, self.width, self.height, self.format, self.stride)
         elif self.format == MONO_VMSB or self.format == MONO_VLSB:
-            self.__format = FormatMonoVertical(buffer, width, height, format, stride)
+            self.__format = FormatMonoVertical(self.buffer, self.width, self.height, self.format, self.stride)
         elif self.format == RGB565:
-            self.__format = FormatRGB565(buffer, width, height, format, stride)
+            self.__format = FormatRGB565(self.buffer, self.width, self.height, self.format, self.stride)
         else:
-            self.__format = FormatMonoHorizontal(buffer, width, height, format, stride)
+            self.__format = FormatRGB565(self.buffer, self.width, self.height, self.format, self.stride)
             print('Warning: this framebuf fotmat is not implement yet, use RGB565 instead.')
     def __repr__(self):
         return self.__format.__repr__()

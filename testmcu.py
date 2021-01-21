@@ -1,31 +1,16 @@
-from mgui.mgui_const import CONFIG_LAYOUT_GAP, CONFIG_LAYOUT_PADDING, CONFIG_LAYOUT_WIDTH
-
-
 try:
     import ujson as json
     import uasyncio as asyncio
 except:
     import json
     import asyncio
+from mgui.mgui_class import MGuiScreen
+from mgui.mgui_root import MGuiRoot
+from mgui.mgui_component import MGuiTextView, MGuiBlankView, MGuiFilledView, MGuiProgressView
+from mgui.mgui_layout import MGuiLinearLayout
+from mgui import mgui_const as C
 
-if __name__ == "__main__":
-    from mgui import framebuf
-    buf = bytearray(16*8*2)
-    frame = framebuf.FrameBuffer(buf,16,8,framebuf.MONO_VMSB)
-    frame.pixel(0,0,65535)
-    frame.pixel(0,7,65535)
-    frame.pixel(15,0,65535)
-    frame.pixel(15,7,65535)
-    frame.rect(1,1,14,6,65535)
-    frame.line(0,7,15,0,65535)
-    frame.line(0,0,15,7,65535)
-
-    from mgui.dev.ssd1306pygame import SSD1306_Emu
-    from mgui.mgui_class import MGuiScreen
-    from mgui.mgui_root import MGuiRoot
-    from mgui.mgui_component import MGuiTextView, MGuiBlankView, MGuiFilledView, MGuiProgressView
-    from mgui.mgui_layout import MGuiLinearLayout
-    from mgui import mgui_const as C
+def run(ssd1306):
     class SSD1306Screen(MGuiScreen):
         def __init__(self, ssd1306):
             self._screen = ssd1306
@@ -35,11 +20,10 @@ if __name__ == "__main__":
             return self._screen
         def get_size(self):
             return self._screen.width, self._screen.height
-    ssd1306 = SSD1306_Emu(128, 64)
     screen = SSD1306Screen(ssd1306)
     root = MGuiRoot()
     context = root.get_context()
-    context[C.CONTEXT_FRAME_RATE] = 15
+    context[C.CONTEXT_FRAME_RATE] = 30
     # [test]
     filled_view = MGuiFilledView(context)
     blank_view = MGuiBlankView(context)
