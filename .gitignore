@@ -5,3 +5,4 @@ __pycache__/
 /dist/
 /lib/mpy_cross/mpy-cross*
 *.mpf
+.mpypack.conf
