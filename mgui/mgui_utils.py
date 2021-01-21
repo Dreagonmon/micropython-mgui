@@ -58,45 +58,8 @@ def get_flex_children_areas(area, children, gap=None, is_horizontal=True):
         h = get_config(c.config, C.CONFIG_LAYOUT_HEIGHT, -1)
         wt = get_config(c.config, C.CONFIG_LAYOUT_WEIGHT, 1)
         children_infos.append((w, h, wt))
+    # calc space
     areas = []
-    # if is_horizontal:
-    #     # sum fixed size
-    #     fixed = 0
-    #     weights = 0
-    #     all_fixed = True
-    #     for i in range(nums):
-    #         areas.append([-1, area_y, -1, area_h])
-    #         w = children_infos[i][0]
-    #         wt = children_infos[i][2]
-    #         areas[i][2] = w
-    #         if w >= 0:
-    #             fixed += w
-    #         else:
-    #             all_fixed = False
-    #             weights += wt
-    #     if all_fixed and gap == None:
-    #         # free gap
-    #         gap_total = area_w - fixed
-    #         free_space = 0
-    #     else:
-    #         # fixed gap
-    #         gap_total = gap_nums * gap
-    #         free_space = area_w - fixed - gap_total
-    #     # calc pos
-    #     used_width = 0
-    #     used_weight = 0
-    #     for i in range(nums):
-    #         areas[i][0] = int(area_x + used_width + (gap_total * i / gap_nums) + (free_space * used_weight / weights))
-    #         w = areas[i][2]
-    #         if w < 0:
-    #             wt = children_infos[i][2]
-    #             w = int(free_space * wt / weights)
-    #             areas[i][2] = w
-    #             used_weight += wt
-    #         else:
-    #             used_width += w
-    # else:
-    #     pass
     if is_horizontal:
         v_pos_c=0
         v_pos_a=2
