@@ -1,4 +1,6 @@
-from .mgui_class import MGuiView, MGuiLayout
+from mgui.mgui_class import MGuiView, MGuiLayout
+from mgui.mgui_component import MGuiBlankView, MGuiFilledView, MGuiTextView, MGuiProgressView
+from mgui.mgui_layout import MGuiLinearLayout
 
 __KEY_TYPE = "t"
 __KEY_ID = "i"
@@ -47,4 +49,9 @@ def load_mgui(root_dict, context):
 def __init__():
     register_mgui_component(MGuiView, "MGuiView")
     register_mgui_component(MGuiLayout, "MGuiLayout")
+    register_mgui_component(MGuiBlankView, "MGuiBlankView")
+    register_mgui_component(MGuiFilledView, "MGuiFilledView")
+    register_mgui_component(MGuiTextView, "MGuiTextView")
+    register_mgui_component(MGuiProgressView, "MGuiProgressView")
+    register_mgui_component(MGuiLinearLayout, "MGuiLinearLayout")
 __init__()

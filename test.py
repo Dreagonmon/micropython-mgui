@@ -1,6 +1,3 @@
-from mgui.mgui_const import CONFIG_LAYOUT_GAP, CONFIG_LAYOUT_PADDING, CONFIG_LAYOUT_WIDTH
-
-
 try:
     import ujson as json
     import uasyncio as asyncio
@@ -9,17 +6,6 @@ except:
     import asyncio
 
 if __name__ == "__main__":
-    from mgui import framebuf
-    buf = bytearray(16*8*2)
-    frame = framebuf.FrameBuffer(buf,16,8,framebuf.MONO_VMSB)
-    frame.pixel(0,0,65535)
-    frame.pixel(0,7,65535)
-    frame.pixel(15,0,65535)
-    frame.pixel(15,7,65535)
-    frame.rect(1,1,14,6,65535)
-    frame.line(0,7,15,0,65535)
-    frame.line(0,0,15,7,65535)
-
     from mgui.dev.ssd1306pygame import SSD1306_Emu
     from mgui.mgui_class import MGuiScreen
     from mgui.mgui_root import MGuiRoot
@@ -76,3 +62,8 @@ if __name__ == "__main__":
     linear_layout.append_child(filled_view)
     linear_layout.append_child(progress_view)
     root.mainloop(linear_layout, screen)
+    print("\n\n\n\n")
+    from mgui.mgui_parser import dump_mgui
+    tree = dump_mgui(linear_layout)
+    js = json.dumps(tree, indent=2)
+    print(js)

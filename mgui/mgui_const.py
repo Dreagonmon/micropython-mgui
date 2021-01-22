@@ -24,5 +24,7 @@ CONTEXT_FG_COLOR = "fg_c"
 CONTEXT_FRAME_RATE = "fps"
 CONTEXT_FRAME_DURATION = "durt"
 CONTEXT_FONT_DRAW_OBJ = "fd_obj" # FontDrae
+CONTEXT_ROOT = "root" # MGuiRoot
+CONTEXT_ROOT_VIEW = "root_v" # MGuiView
 # key event and touch event
 CONTEXT_FOCUS_VIEW = "f_id" # MGuiView

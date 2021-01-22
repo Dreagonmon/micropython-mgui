@@ -35,14 +35,14 @@ class MGuiView(object):
         return None
 
     def need_render(self, context):
-        ''' check if view need render '''
+        ''' check if view and subview need render '''
         return self.is_need_render
 
     async def render(self, context, frame, area):
         ''' render on framebuf in area. return effected area list'''
         self.is_need_render = False
         return []
-        
+
     def on_event(self, context, event):
         ''' event handler, when handled, return True if the event has been processed '''
         if self.event_handler != None:
@@ -93,7 +93,7 @@ class MGuiLayout(MGuiView):
         return None
         
     def need_render(self, context):
-        ''' check if view need render '''
+        ''' check if view and subview need render '''
         if self.is_need_render:
             return True
         for view in self.children:
