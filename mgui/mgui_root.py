@@ -35,6 +35,7 @@ class MGuiRoot(object):
         context[C.CONTEXT_FONT_DRAW_OBJ] = get_context(context, C.CONTEXT_FONT_DRAW_OBJ, FontDrawAscii()) # type FontDraw
         self.__context = context
         self.__running = False
+        self.__lasttime = 0
 
     def get_context(self):
         return self.__context
@@ -59,31 +60,34 @@ class MGuiRoot(object):
         self.__context[C.CONTEXT_ROOT] = self
         self.__context[C.CONTEXT_ROOT_VIEW] = root_view
         try:
-            s_w, s_h = screen.get_size()
-            frame = screen.get_framebuffer()
-            lasttime = time_ms()
-            target_duration = 1000 // self.__context[C.CONTEXT_FRAME_RATE]
+            self.__lasttime = time_ms()
             while self.__running:
-                now = time_ms()
-                if now - lasttime < target_duration:
-                    await asyncio.sleep(0.0)
-                    continue
-                self.__context[C.CONTEXT_FRAME_DURATION] = now - lasttime
-                lasttime = now
-                # print(self.__context[CONTEXT_FRAME_DURATION])
-                try:
-                    if root_view.need_render(self.__context):
-                        effect_area = await root_view.render(self.__context, frame, (0, 0, s_w, s_h))
-                        await screen.refresh(self.__context, effect_area)
-                except Exception as e:
-                    print_exception(e)
-                    if is_debug:
-                        self.stop()
-                        break
+                await self.render_once(root_view, screen)
         except KeyboardInterrupt:
             # print("Abort.")
             self.stop()
             pass
+
+    async def render_once(self, root_view, screen):
+        s_w, s_h = screen.get_size()
+        frame = screen.get_framebuffer()
+        target_duration = 1000 // self.__context[C.CONTEXT_FRAME_RATE]
+        now = time_ms()
+        if now - self.__lasttime < target_duration:
+            await asyncio.sleep(0.0)
+            return
+        self.__context[C.CONTEXT_FRAME_DURATION] = now - self.__lasttime
+        self.__lasttime = now
+        # print(self.__context[CONTEXT_FRAME_DURATION])
+        try:
+            if root_view.need_render(self.__context):
+                effect_area = await root_view.render(self.__context, frame, (0, 0, s_w, s_h))
+                await screen.refresh(self.__context, effect_area)
+        except Exception as e:
+            print_exception(e)
+            if is_debug:
+                self.stop()
+                return
 
     def send_event(self, event):
         # type: (MGuiEvent) -> bool
