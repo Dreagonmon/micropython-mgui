@@ -7,7 +7,10 @@ try:
     from typing import Any, Coroutine, List, Union
     from mgui.mgui_class import MGuiRect, MGuiContext
     from mgui.dev.framebuf import FrameBuffer, Color
-except: pass
+except:
+    import traceback
+    traceback.print_exc()
+    pass
 
 class MGuiLinearLayout(MGuiLayout):
     async def render(self, context, frame, area):
@@ -33,3 +36,9 @@ class MGuiLinearLayout(MGuiLayout):
             effect_area = [(x, y, w, h)]
         self.is_need_render = False
         return effect_area
+
+class MGuiStackLayout(MGuiLayout):
+    async def need_render(self, context: MGuiContext) -> bool:
+        if self.is_need_render:
+            return True
+        return False

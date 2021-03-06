@@ -1,5 +1,12 @@
 # class module
 # ======== Utils Class ========
+try:
+    from typing import Any, Dict, Optional, List, Tuple, Union, Callable
+    MGuiRect = Tuple[int, int, int, int] # x, y, w, h
+    MGuiEvent = Tuple[int, Any]
+    MGuiContext = Dict[str, Any]
+    EventHandler = Union[None, Callable[[MGuiContext, MGuiEvent], bool]]
+except: pass
 
 # ======== Core Class ========
 class MGuiView(object):
