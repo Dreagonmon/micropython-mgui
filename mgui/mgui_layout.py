@@ -7,10 +7,7 @@ try:
     from typing import Any, Coroutine, List, Union
     from mgui.mgui_class import MGuiRect, MGuiContext
     from mgui.dev.framebuf import FrameBuffer, Color
-except:
-    import traceback
-    traceback.print_exc()
-    pass
+except: pass
 
 class MGuiLinearLayout(MGuiLayout):
     async def render(self, context, frame, area):
