@@ -84,15 +84,15 @@ class MGuiRoot(object):
                 effect_area = await root_view.render(self.__context, frame, (0, 0, s_w, s_h))
                 await screen.refresh(self.__context, effect_area)
         except Exception as e:
-            print_exception(e)
             if is_debug:
+                print_exception(e)
                 self.stop()
                 return
 
-    def send_event(self, event):
+    async def send_event(self, event):
         # type: (MGuiEvent) -> bool
         view = get_context(self.__context, C.CONTEXT_ROOT_VIEW, None)
         if not isinstance(view, MGuiView):
             return False
         else:
-            return view.on_event(self.__context, event)
+            return await view.on_event(self.__context, event)

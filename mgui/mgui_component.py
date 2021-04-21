@@ -35,11 +35,12 @@ class MGuiTextView(MGuiView):
         # type: (MGuiContext, FrameBuffer, MGuiRect) -> Coroutine[Any, Any, List[MGuiRect]]
         x, y, w, h = area
         effect_area = [area]
-        txt = get_config(self.config, C.CONFIG_TEXT, '') # type: str
-        fd = get_context(context, get_config(self.config, C.CONFIG_FONT_NAME, C.CONTEXT_FONT_DRAW_OBJ)) # type: FontDraw
-        fgc = get_config(self.config, C.CONFIG_FG_COLOR, context[C.CONTEXT_FG_COLOR]) # type: Color
-        bgc = get_config(self.config, C.CONFIG_BG_COLOR, context[C.CONTEXT_BG_COLOR]) # type: Color
-        centered = get_config(self.config, C.CONFIG_CENTER_TEXT, False) # type: bool
+        config = self.config
+        txt = get_config(config, C.CONFIG_TEXT, '') # type: str
+        fd = get_context(context, get_config(config, C.CONFIG_FONT_NAME, C.CONTEXT_FONT_DRAW_OBJ)) # type: FontDraw
+        fgc = get_config(config, C.CONFIG_FG_COLOR, context[C.CONTEXT_FG_COLOR]) # type: Color
+        bgc = get_config(config, C.CONFIG_BG_COLOR, context[C.CONTEXT_BG_COLOR]) # type: Color
+        centered = get_config(config, C.CONFIG_CENTER_TEXT, False) # type: bool
         frame.fill_rect(x, y, w, h, bgc)
         # center text
         if centered:
@@ -62,11 +63,13 @@ class MGuiProgressView(MGuiView):
         # type: (MGuiContext, FrameBuffer, MGuiRect) -> Coroutine[Any, Any, List[MGuiRect]]
         x, y, w, h = area
         effect_area = [area]
-        fgc = get_config(self.config, C.CONFIG_FG_COLOR, context[C.CONTEXT_FG_COLOR]) # type: Color
-        bgc = get_config(self.config, C.CONFIG_BG_COLOR, context[C.CONTEXT_BG_COLOR]) # type: Color
-        pc = get_config(self.config, C.CONFIG_PROGRESS_VALUE, -1) # float
+        config = self.config
+        animation_value = self.animation
+        fgc = get_config(config, C.CONFIG_FG_COLOR, context[C.CONTEXT_FG_COLOR]) # type: Color
+        bgc = get_config(config, C.CONFIG_BG_COLOR, context[C.CONTEXT_BG_COLOR]) # type: Color
+        pc = get_config(config, C.CONFIG_PROGRESS_VALUE, -1) # float
         frame.fill_rect(x, y, w, h, bgc)
-        offset = self.animation * w
+        offset = animation_value * w
         if pc < 0:
             # inf loop
             # display 8 block
@@ -90,7 +93,7 @@ class MGuiProgressView(MGuiView):
             frame.fill_rect(int(x + offset), y, p1_w, h, fgc)
             frame.fill_rect(x, y, p2_w, h, fgc)
             # print(p1_w, p2_w)
-        self.animation += context[C.CONTEXT_FRAME_DURATION] / 10000 # moving 10% / s
-        self.animation = 0 if self.animation > 1.0 else self.animation
+        animation_value += context[C.CONTEXT_FRAME_DURATION] / 10000 # moving 10% / s
+        self.animation = 0 if animation_value > 1.0 else animation_value
         # effect_area.extend(await super().render(context, frame, area)) # let self.is_need_render keep True
         return effect_area

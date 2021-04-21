@@ -103,11 +103,12 @@ class FontDraw():
 def _ascii_is_special_char(char, ascii):
     return char.encode("utf8")[0] == ascii
 
+def _ascii_draw_char_on(char, frame, x, y, color):
+    frame.text(char, x, y, color)
+
 class FontDrawAscii(FontDraw):
     def get_font_size(self):
         return (8, 8)
     
     def draw_on_frame(self, text, frame, x, y, color=1, width_limit=-1, height_limit=-1):
-        def _ascii_draw_char_on(char, frame, x, y, color):
-            frame.text(char, x, y, color)
         return _draw_char_one_by_one(frame, x, y, color, width_limit, height_limit, (8, 8), text, _ascii_is_special_char, _ascii_draw_char_on)

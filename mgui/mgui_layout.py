@@ -12,23 +12,26 @@ except: pass
 class MGuiLinearLayout(MGuiLayout):
     async def render(self, context, frame, area):
         # type: (MGuiContext, FrameBuffer, MGuiRect) -> Coroutine[Any, Any, List[MGuiRect]]
+        config = self.config
+        is_need_render = self.is_need_render
+        children = self.children
         x, y, w, h = area
         effect_area = []
-        bgc = get_config(self.config, C.CONFIG_BG_COLOR, context[C.CONTEXT_BG_COLOR]) # type: Color
-        padding = get_config(self.config, C.CONFIG_LAYOUT_PADDING, 0) # type: int
-        gap = get_config(self.config, C.CONFIG_LAYOUT_GAP, None) # type: int
-        is_hor = get_config(self.config, C.CONFIG_LAYOUT_ORIENTATION, C.CONFIG_VALUE_ORIENTATION_HORIZONTAL)
+        bgc = get_config(config, C.CONFIG_BG_COLOR, context[C.CONTEXT_BG_COLOR]) # type: Color
+        padding = get_config(config, C.CONFIG_LAYOUT_PADDING, 0) # type: int
+        gap = get_config(config, C.CONFIG_LAYOUT_GAP, None) # type: int
+        is_hor = get_config(config, C.CONFIG_LAYOUT_ORIENTATION, C.CONFIG_VALUE_ORIENTATION_HORIZONTAL)
         is_hor = True if is_hor == C.CONFIG_VALUE_ORIENTATION_HORIZONTAL else False
         area = get_padding_box(area, padding)
-        areas = get_flex_children_areas(area, self.children, gap, is_hor)
-        if self.is_need_render:
+        areas = get_flex_children_areas(area, children, gap, is_hor)
+        if is_need_render:
             # clear area
             frame.fill_rect(x, y, w, h, bgc)
-        for i in range(len(self.children)):
-            if self.is_need_render or self.children[i].need_render(context):
+        for i in range(len(children)):
+            if is_need_render or children[i].need_render(context):
                 # draw all, or only draw needed
-                effect_area.extend(await self.children[i].render(context, frame, areas[i]))
-        if self.is_need_render:
+                effect_area.extend(await children[i].render(context, frame, areas[i]))
+        if is_need_render:
             # update all
             effect_area = [(x, y, w, h)]
         self.is_need_render = False

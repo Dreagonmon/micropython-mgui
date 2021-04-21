@@ -1,7 +1,8 @@
 # micropython-mgui
-Easy to port micropython micro gui library, based on ```framebuf```
+Easy to port micropython micro gui library, based on micropython ```framebuf```module
+
 # Prepare
-Make sure you are using python3.
+Make sure you are using python3.8 and higher
 ```
 pip install -r .\requirements.txt
 ```
@@ -12,10 +13,6 @@ Then, modify ```.mpypack.conf``` and config your mpy-cross path.
 For details about mpypack, see [mpypack: A simple tool to pack up MicroPython code](https://pypi.org/project/mpypack/)
 
 # Build
-You should install mpy_cross first.
-```
-python -m pip install mpy_cross --user
-```
 Modify ```.mpypack.conf```, Then run ```build.py```
 
 # Install
@@ -39,3 +36,16 @@ e.g. import path are ['', '/lib']:
 |---:main.py
 |---...
 ```
+
+# Useage
+
+### The Class
+- MGuiView is the base class. Any view extends this class.
+  - examples in mgui_component.py
+- MGuiLayout is layout base class. Any view that has children should extends this class.
+  - examples in mgui_layout.py
+- MGuiRoot is the MGUI root class. This class handle the loop, context, and start passing an event.
+- MGuiScreen is the abstract screen class. Used by MGuiRoot to refresh screen.
+
+### Event System
+The event passed from parent to children. if any children return True, then the event stop passing.

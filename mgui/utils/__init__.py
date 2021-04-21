@@ -5,7 +5,7 @@ try:
         "bmfont",
     ]
 except Exception as e:
-    from mgui.utils import bmfont
+    from . import bmfont
     __all__ = [
         "bmfont",
     ]

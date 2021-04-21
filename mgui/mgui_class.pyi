@@ -5,7 +5,7 @@ from .dev import framebuf
 MGuiRect = Tuple[int, int, int, int] # x, y, w, h
 MGuiEvent = Tuple[int, Any]
 MGuiContext = Dict[str, Any]
-EventHandler = Union[None, Callable[[MGuiContext, MGuiEvent], bool]]
+EventHandler = Union[None, Callable[[MGuiView, MGuiContext, MGuiEvent], bool]]
 
 class MGuiView(object):
     __parent: MGuiView
@@ -22,7 +22,7 @@ class MGuiView(object):
     def find_view_by_vid(self, vid: str) -> Optional[MGuiView]: ...
     def need_render(self, context: MGuiContext) -> bool: ...
     async def render(self, context: MGuiContext, frame: framebuf.FrameBuffer, area: MGuiRect) -> List[MGuiRect]:...
-    def on_event(self, context: MGuiContext, event: MGuiEvent) -> bool: ...
+    async def on_event(self, context: MGuiContext, event: MGuiEvent) -> bool: ...
 
 class MGuiLayout(MGuiView):
     children: List[MGuiView]

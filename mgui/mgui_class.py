@@ -50,10 +50,10 @@ class MGuiView(object):
         self.is_need_render = False
         return []
 
-    def on_event(self, context, event):
+    async def on_event(self, context, event):
         ''' event handler, when handled, return True if the event has been processed '''
         if self.event_handler != None:
-            return self.event_handler(context, event)
+            return self.event_handler(self, context, event)
         else:
             return False
 
@@ -116,12 +116,12 @@ class MGuiLayout(MGuiView):
         self.is_need_render = False
         return effect_area
 
-    def on_event(self, context, event):
-        # default return super() method
-        if super().on_event(context, event):
+    async def on_event(self, context, event):
+        # default return super() method, call the external event handler.
+        if await super().on_event(context, event):
             return True
         for view in self.children:
-            if view.on_event(context, event):
+            if await view.on_event(context, event):
                 return True
         return False
 

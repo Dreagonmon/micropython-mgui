@@ -1,5 +1,5 @@
 # /build.py
-mpypack~=0.1.2
+mpypack~=0.1.3
 
 # /mgui/dev/screen_server.py
 aiohttp~=3.7.1
